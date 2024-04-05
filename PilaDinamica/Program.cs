@@ -9,6 +9,7 @@
             myPila.Push(2);
             myPila.Push(3);
             myPila.Push(4);
+            Console.WriteLine(myPila.Contains(5));
 
             foreach (int i in myPila)
             {

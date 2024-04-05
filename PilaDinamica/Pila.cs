@@ -58,6 +58,24 @@ namespace PilaDinamica
             return dada;
         }
 
+        public bool Contains(T info)
+        {
+            if (info == null) throw new Exception("No pot comparar amb valors nulls");
+            bool trobat = false;
+            int num = Convert.ToInt32(top.Info), num2 = Convert.ToInt32(info);
+            Node<T> cursor = top;
+            while (cursor != null && !trobat)
+            {
+                if(num == num2)
+                {
+                    trobat = true;
+                }
+                num = Convert.ToInt32(cursor.Info);
+                cursor = cursor.Seg;
+            }
+            return trobat;
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
             Node<T> cursor = top;
