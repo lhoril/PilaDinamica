@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.Serialization.Formatters;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -175,10 +176,18 @@ namespace PilaDinamica
             }
             else
             {
-                Node<T> tmp = GoTo(index-1);
-                tmp.Seg = null;
+                Node<T> antCaixa = GoTo(index-2);
+                Node<T> node = antCaixa.Seg;
+                antCaixa.Seg = node;
                 nElem--;
             }
+        }
+
+        public bool Remove(T item)
+        {
+            int index = IndexOf(item);
+            RemoveAt(index);
+            return Contains(item);
         }
 
         public void Clear()
@@ -192,15 +201,18 @@ namespace PilaDinamica
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < arrayIndex; i++)
+            {
+                Add(array[i]);
+            }
         }
 
-        public bool Remove(T item)
+        public void Add(T item)
         {
-            int index = IndexOf(item);
-            RemoveAt(index);
-            return Contains(item);
+            if (item == null) throw new ArgumentNullException("ITEM NO POT SER NULL");
+            Push(item);
         }
+
         #endregion
         #region Interficies
 
@@ -217,12 +229,6 @@ namespace PilaDinamica
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
-        }
-
-        public void Add(T item)
-        {
-            if(item == null) throw new ArgumentNullException("ITEM NO POT SER NULL");
-            Push(item);
         }
 
         #endregion

@@ -9,6 +9,8 @@
             myPila.Push(2);
             myPila.Push(3);
             myPila.Push(4);
+            myPila.Pop();
+            Console.WriteLine("indexOf --> "+myPila.IndexOf(55));
             Console.WriteLine("Contains --> "+myPila.Contains(2));
             Console.WriteLine("Count --> " +myPila.Count);
             Console.WriteLine("Index --> " +myPila.IndexOf(1));
@@ -23,6 +25,10 @@
             Console.WriteLine();
             //myPila.Clear();
             Console.WriteLine(myPila.Remove(2));
+            foreach (int i in myPila)
+            {
+                Console.Write(i + ", ");
+            }
             Console.WriteLine("Count --> " + myPila.Count);
         }
     }
