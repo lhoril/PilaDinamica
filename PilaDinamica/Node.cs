@@ -19,6 +19,5 @@ namespace PilaDinamica
         public T Info { get => info; set => info = value; }
         public Node<T> Seg { get => seg; set => seg = value; }
 
-        public Node <T> Next { }
     }
 }

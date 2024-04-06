@@ -12,7 +12,7 @@ namespace PilaDinamica
     public class Pila<T> : IEnumerable<T>, IEnumerable, IList<T>
     {
         private Node<T> top = null;
-        private int nElem = 0;
+        private int nElem = -1;
         #region Constructors
         public Pila()
         {
@@ -102,6 +102,7 @@ namespace PilaDinamica
                 Node<T> tmp = top;
                 top = top.Seg;
                 tmp.Seg = null;
+                nElem--;
             }
             return dada;
         }
@@ -141,17 +142,52 @@ namespace PilaDinamica
 
         public void Insert(int index, T item)
         {
-            
+            if (index < 0 || index >= Count) throw new ArgumentOutOfRangeException("index");
+            if (IsReadOnly) throw new NotSupportedException();
+            Node<T> itNum = new Node<T>(item);
+            if (index == 0)
+                Add(item);
+            if (index == (Count - 1))
+            {
+                GoTo(index).Seg = itNum;
+                nElem++;
+            }
+            else
+            {
+                Node<T> antCaixa = GoTo(index - 1);
+                Node<T> node = antCaixa.Seg;
+                antCaixa.Seg = itNum;
+                itNum.Seg = node;
+                nElem++;
+            }
         }
-
         public void RemoveAt(int index)
         {
-            
+            if (index < 0 || index >= Count) throw new ArgumentOutOfRangeException("index");
+            if (IsReadOnly) throw new NotSupportedException();
+            if (index == 0)
+            {
+                Pop();
+            }
+            else if (index == (Count - 1))
+            {
+                GoTo(index).Seg = null;
+            }
+            else
+            {
+                Node<T> tmp = GoTo(index-1);
+                tmp.Seg = null;
+                nElem--;
+            }
         }
 
         public void Clear()
         {
-            top = null;
+            if (IsReadOnly) throw new NotSupportedException("No es pot eliminar cap cosa de la pila es només de lectura");
+            for (int i = Count; i > 0; i--)
+            {
+                Pop();
+            }
         }
 
         public void CopyTo(T[] array, int arrayIndex)
@@ -161,7 +197,9 @@ namespace PilaDinamica
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            int index = IndexOf(item);
+            RemoveAt(index);
+            return Contains(item);
         }
         #endregion
         #region Interficies
