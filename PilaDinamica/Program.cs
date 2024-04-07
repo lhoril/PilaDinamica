@@ -23,7 +23,7 @@
             }
             Console.WriteLine();
             //myPila.Clear();
-            Console.WriteLine(myPila.Remove(1));
+            Console.WriteLine(myPila.Remove(5));
             foreach (int i in myPila)
             {
                 Console.Write(i + ", ");

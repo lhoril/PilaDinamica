@@ -172,7 +172,9 @@ namespace PilaDinamica
             }
             else if (index == (Count - 1))
             {
-                GoTo(index).Seg = null;
+                Node<T> antCaixa = GoTo(index-2);
+                antCaixa.Seg = null;
+                nElem--;
             }
             else
             {
@@ -185,9 +187,11 @@ namespace PilaDinamica
 
         public bool Remove(T item) // Remove elimina un item
         {
+            bool trobat = false;
             int index = IndexOf(item);
             RemoveAt(index);
-            return Contains(item);
+            if(!Contains(item)) trobat = true;
+            return trobat;
         }
 
         public void Clear() // Elimina todos los elementos
