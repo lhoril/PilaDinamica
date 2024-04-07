@@ -24,6 +24,7 @@ namespace PilaDinamica
         {
            Node<T> node = new Node<T>(info);
            this.top = node;
+            nElem++;
         }
         #endregion
         #region Propietats
