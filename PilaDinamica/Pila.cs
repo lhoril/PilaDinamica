@@ -147,7 +147,7 @@ namespace PilaDinamica
             Node<T> itNum = new Node<T>(item);
             if (index == 0)
                 Add(item);
-            if (index == (Count - 1))
+            else if(index == (Count - 1))
             {
                 GoTo(index).Seg = itNum;
                 nElem++;
