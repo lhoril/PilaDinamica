@@ -24,7 +24,6 @@ namespace PilaDinamica
         {
            Node<T> node = new Node<T>(info);
            this.top = node;
-            nElem++;
         }
         #endregion
         #region Propietats
@@ -63,7 +62,7 @@ namespace PilaDinamica
             Node<T> caixa = top;
             if(posicio >= 0 && posicio < this.Count)
             {
-                for (int i = 0; i <= posicio; i++)
+                for (int i = 0; i < posicio; i++)
                 {
                     caixa = caixa.Seg;
                 }
@@ -150,7 +149,10 @@ namespace PilaDinamica
                 Add(item);
             else if(index == (Count - 1))
             {
-                GoTo(index).Seg = itNum;
+                Node<T> antCaixa = GoTo(index);
+                Node<T> ultCaixa = antCaixa.Seg;
+                antCaixa.Seg = itNum;
+                itNum.Seg = ultCaixa;
                 nElem++;
             }
             else
@@ -172,15 +174,20 @@ namespace PilaDinamica
             }
             else if (index == (Count - 1))
             {
-                Node<T> antCaixa = GoTo(index-2);
+                Node<T> antCaixa = GoTo(index-1);
+                Node<T>ultCaixa= antCaixa.Seg;
+                Node<T> node = ultCaixa.Seg;
                 antCaixa.Seg = null;
+                antCaixa.Seg = node;
                 nElem--;
             }
             else
             {
                 Node<T> antCaixa = GoTo(index-1);
                 Node<T> node = antCaixa.Seg;
-                antCaixa.Seg = node;
+                Node<T> newIt = node.Seg;
+                antCaixa.Seg = null;
+                antCaixa.Seg = newIt;
                 nElem--;
             }
         }
