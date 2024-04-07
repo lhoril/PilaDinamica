@@ -52,30 +52,32 @@ namespace PilaDinamica
             {
                 if (index < 0 || index >= Count) throw new IndexOutOfRangeException("FORA DE RANG");
                 if (IsReadOnly) throw new NotSupportedException("L'ESTRUCTURA NO PERMET MODIFICACIONS");
+                Node<T> target = GoTo(index);
+                target.Info = value;
             }
         }
 
-        private Node<T> GoTo(int posicio)
+        private Node<T> GoTo(int posicio) // Metodo el cual te lleva a una posicion en la cual te mostrara la informacion actual i la de después
         {
-            Node<T> target = top;
+            Node<T> caixa = top;
             if(posicio >= 0 && posicio < this.Count)
             {
                 for (int i = 0; i <= posicio; i++)
                 {
-                    target = target.Seg;
+                    caixa = caixa.Seg;
                 }
             }
             else
             {
-                target = null;
+                caixa = null;
             }
 
 
-            return target;
+            return caixa;
         }
         #endregion
         #region Constructors
-        public void Push(T info)
+        public void Push(T info) // Mete un elemento delante tuyo
         {
             Node<T> node = new Node<T>(info);
             if (!Empty)
@@ -90,7 +92,7 @@ namespace PilaDinamica
             }
         }
 
-        public T Pop()
+        public T Pop() // Elimina el elemento que tienes delante tuyo
         {
             if (Empty) throw new Exception("STACK UNDERFLOW! STACK IS EMPTY!!!");
             T dada = top.Info;
@@ -108,7 +110,7 @@ namespace PilaDinamica
             return dada;
         }
 
-        public bool Contains(T info)
+        public bool Contains(T info) // Busca un elemnto i retrurna True o false dependiendo si lo has esncontrado
         {
             if (info == null) throw new Exception("No pot comparar amb valors nulls");
             bool trobat = false;
@@ -116,32 +118,29 @@ namespace PilaDinamica
             Node<T> cursor = top;
             while (cursor != null && !trobat)
             {
-                if(num == num2)
-                {
-                    trobat = true;
-                }
+                trobat = num.Equals(num2);
                 num = Convert.ToInt32(cursor.Info);
                 cursor = cursor.Seg;
             }
             return trobat;
         }
 
-        public int IndexOf(T item)
+        public int IndexOf(T item) // Busca un elemento si trobat es igual a true devolvera el numero de posicion de elemento y si es false devolvera -1
         {
             if (item == null) throw new Exception("No pot comparar amb valors nulls");
             bool trobat = false;
-            int num = 0, num2 = Convert.ToInt32(item), index = -1;
+            int index = -1;
             IEnumerator<T> cursor = this.GetEnumerator();
             while ( cursor.MoveNext() && !trobat)
             {
-                num = Convert.ToInt32(cursor.Current);
-                trobat = num.Equals(num2);
+                trobat = cursor.Current.Equals(item);
                 index++;
             }
+            if(!trobat) index = -1;
             return index;
         }
 
-        public void Insert(int index, T item)
+        public void Insert(int index, T item) // Inserta una informacion a partir de una informacion
         {
             if (index < 0 || index >= Count) throw new ArgumentOutOfRangeException("index");
             if (IsReadOnly) throw new NotSupportedException();
@@ -156,13 +155,13 @@ namespace PilaDinamica
             else
             {
                 Node<T> antCaixa = GoTo(index - 1);
-                Node<T> node = antCaixa.Seg;
+                Node<T> ultCaixa = antCaixa.Seg; // Caja que recuperara los ultimos enlaces
                 antCaixa.Seg = itNum;
-                itNum.Seg = node;
+                itNum.Seg = ultCaixa;
                 nElem++;
             }
         }
-        public void RemoveAt(int index)
+        public void RemoveAt(int index) // RemoveAt elimina un item por index o posicion
         {
             if (index < 0 || index >= Count) throw new ArgumentOutOfRangeException("index");
             if (IsReadOnly) throw new NotSupportedException();
@@ -176,21 +175,21 @@ namespace PilaDinamica
             }
             else
             {
-                Node<T> antCaixa = GoTo(index-2);
+                Node<T> antCaixa = GoTo(index-1);
                 Node<T> node = antCaixa.Seg;
                 antCaixa.Seg = node;
                 nElem--;
             }
         }
 
-        public bool Remove(T item)
+        public bool Remove(T item) // Remove elimina un item
         {
             int index = IndexOf(item);
             RemoveAt(index);
             return Contains(item);
         }
 
-        public void Clear()
+        public void Clear() // Elimina todos los elementos
         {
             if (IsReadOnly) throw new NotSupportedException("No es pot eliminar cap cosa de la pila es només de lectura");
             for (int i = Count; i > 0; i--)
@@ -199,7 +198,7 @@ namespace PilaDinamica
             }
         }
 
-        public void CopyTo(T[] array, int arrayIndex)
+        public void CopyTo(T[] array, int arrayIndex) // Copia una informacion de un array a partir de un index i la coloca con un push a la pila
         {
             for (int i = 0; i < arrayIndex; i++)
             {
@@ -207,7 +206,7 @@ namespace PilaDinamica
             }
         }
 
-        public void Add(T item)
+        public void Add(T item) // Añades un numero
         {
             if (item == null) throw new ArgumentNullException("ITEM NO POT SER NULL");
             Push(item);
