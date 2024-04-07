@@ -149,7 +149,7 @@ namespace PilaDinamica
                 Add(item);
             else if(index == (Count - 1))
             {
-                Node<T> antCaixa = GoTo(index);
+                Node<T> antCaixa = GoTo(index-1);
                 Node<T> ultCaixa = antCaixa.Seg;
                 antCaixa.Seg = itNum;
                 itNum.Seg = ultCaixa;

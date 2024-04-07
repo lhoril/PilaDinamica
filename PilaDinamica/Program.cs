@@ -14,7 +14,7 @@
             Console.WriteLine("Contains --> "+myPila.Contains(2));
             Console.WriteLine("Count --> " +myPila.Count);
             Console.WriteLine("Index --> " +myPila.IndexOf(1));
-            myPila.Insert(3, 6);
+            myPila.Insert(0, 6);
             Console.WriteLine("Count Despres de Insert--> " + myPila.Count);
 
             foreach (int i in myPila)
@@ -23,7 +23,7 @@
             }
             Console.WriteLine();
             //myPila.Clear();
-            Console.WriteLine(myPila.Remove(5));
+            Console.WriteLine(myPila.Remove(2));
             foreach (int i in myPila)
             {
                 Console.Write(i + ", ");
