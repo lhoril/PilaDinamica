@@ -32,7 +32,7 @@
             }
             Console.Write("]");
             Console.WriteLine();
-            Console.WriteLine(myPila.Remove(2));
+            Console.WriteLine("IsRemoved --> "+myPila.Remove(2));
             Console.Write("[ ");
             foreach (int i in myPila)
             {
